@@ -35,25 +35,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
   final TextEditingController _idController = TextEditingController();
-  final TextEditingController _updateIdController = TextEditingController();
-  final TextEditingController _updateNameController = TextEditingController();
-  final TextEditingController _updateAgeController = TextEditingController();
-  final TextEditingController _deleteIdController = TextEditingController();
-  final TextEditingController _queryIdController = TextEditingController();
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _ageController.dispose();
     _idController.dispose();
-    _updateIdController.dispose();
-    _updateNameController.dispose();
-    _updateAgeController.dispose();
-    _deleteIdController.dispose();
-    _queryIdController.dispose();
     super.dispose();
   }
 
@@ -63,212 +49,141 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('sqflite'),
-        backgroundColor: Colors.blue,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // Insert Section
-              const Text(
-                'Insert New Record',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
+              // Text field for ID input
               Container(
-                padding: const EdgeInsets.all(15),
+                width: 250,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      controller: _ageController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Age',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    ElevatedButton(
-                      onPressed: _insert,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                      ),
-                      child: const Text('Insert'),
-                    ),
-                  ],
+                child: TextField(
+                  controller: _idController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter ID',
+                    border: InputBorder.none,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-
               const SizedBox(height: 20),
 
-              // Query All Button
-              ElevatedButton(
-                onPressed: _query,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+              // Insert button
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue, width: 2),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text('Query All Rows'),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Update Section
-              const Text(
-                'Update Record',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                child: ElevatedButton(
+                  onPressed: _insert,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                  ),
+                  child: const Text('insert'),
+                ),
               ),
               const SizedBox(height: 10),
+
+              // Query button
               Container(
-                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.blue, width: 2),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _updateIdController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'ID to Update',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      controller: _updateNameController,
-                      decoration: const InputDecoration(
-                        labelText: 'New Name',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      controller: _updateAgeController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'New Age',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    ElevatedButton(
-                      onPressed: _update,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                      ),
-                      child: const Text('Update'),
-                    ),
-                  ],
+                child: ElevatedButton(
+                  onPressed: _query,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                  ),
+                  child: const Text('query'),
                 ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Delete Section
-              const Text(
-                'Delete Record',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
+
+              // Update button
               Container(
-                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.blue, width: 2),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _deleteIdController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'ID to Delete',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    ElevatedButton(
-                      onPressed: _delete,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                      ),
-                      child: const Text('Delete'),
-                    ),
-                  ],
+                child: ElevatedButton(
+                  onPressed: _update,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                  ),
+                  child: const Text('update'),
                 ),
               ),
+              const SizedBox(height: 10),
 
+              // Delete button
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue, width: 2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: ElevatedButton(
+                  onPressed: _delete,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                  ),
+                  child: const Text('delete'),
+                ),
+              ),
               const SizedBox(height: 20),
               const Divider(thickness: 2),
               const SizedBox(height: 10),
-
-              // Part 2 Functions
               const Text(
                 'Part 2 Functions',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
 
-              // Query by ID Section
+              // Query by ID button
               Container(
-                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.green, width: 2),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _queryIdController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'ID to Query',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    ElevatedButton(
-                      onPressed: _queryById,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                      ),
-                      child: const Text('Query by ID'),
-                    ),
-                  ],
+                child: ElevatedButton(
+                  onPressed: _queryById,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                  ),
+                  child: const Text('query by ID'),
                 ),
               ),
+              const SizedBox(height: 10),
 
-              const SizedBox(height: 15),
-
-              // Delete All Button
-              ElevatedButton(
-                onPressed: _deleteAll,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[700],
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+              // Delete All button
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.red, width: 2),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text('Delete All Records'),
+                child: ElevatedButton(
+                  onPressed: _deleteAll,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                  ),
+                  child: const Text('delete all'),
+                ),
               ),
             ],
           ),
@@ -280,22 +195,13 @@ class _MyHomePageState extends State<MyHomePage> {
   // Button onPressed methods
 
   void _insert() async {
-    if (_nameController.text.isEmpty || _ageController.text.isEmpty) {
-      debugPrint('Error: Name and Age fields cannot be empty');
-      return;
-    }
-
     // row to insert
     Map<String, dynamic> row = {
-      DatabaseHelper.columnName: _nameController.text,
-      DatabaseHelper.columnAge: int.parse(_ageController.text)
+      DatabaseHelper.columnName: 'Bob',
+      DatabaseHelper.columnAge: 23
     };
     final id = await dbHelper.insert(row);
     debugPrint('inserted row id: $id');
-
-    // Clear the text fields after insert
-    _nameController.clear();
-    _ageController.clear();
   }
 
   void _query() async {
@@ -307,60 +213,47 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _update() async {
-    if (_updateIdController.text.isEmpty ||
-        _updateNameController.text.isEmpty ||
-        _updateAgeController.text.isEmpty) {
-      debugPrint('Error: All update fields must be filled');
+    if (_idController.text.isEmpty) {
+      debugPrint('Please enter an ID');
       return;
     }
 
     // row to update
     Map<String, dynamic> row = {
-      DatabaseHelper.columnId: int.parse(_updateIdController.text),
-      DatabaseHelper.columnName: _updateNameController.text,
-      DatabaseHelper.columnAge: int.parse(_updateAgeController.text)
+      DatabaseHelper.columnId: int.parse(_idController.text),
+      DatabaseHelper.columnName: 'Mary',
+      DatabaseHelper.columnAge: 32
     };
     final rowsAffected = await dbHelper.update(row);
     debugPrint('updated $rowsAffected row(s)');
-
-    // Clear the text fields after update
-    _updateIdController.clear();
-    _updateNameController.clear();
-    _updateAgeController.clear();
   }
 
   void _delete() async {
-    if (_deleteIdController.text.isEmpty) {
-      debugPrint('Error: ID field cannot be empty');
+    if (_idController.text.isEmpty) {
+      debugPrint('Please enter an ID');
       return;
     }
 
-    final id = int.parse(_deleteIdController.text);
+    final id = int.parse(_idController.text);
     final rowsDeleted = await dbHelper.delete(id);
     debugPrint('deleted $rowsDeleted row(s): row $id');
-
-    // Clear the text field after delete
-    _deleteIdController.clear();
   }
 
   // Part 2 Functions
 
   void _queryById() async {
-    if (_queryIdController.text.isEmpty) {
-      debugPrint('Error: ID field cannot be empty');
+    if (_idController.text.isEmpty) {
+      debugPrint('Please enter an ID');
       return;
     }
 
-    final id = int.parse(_queryIdController.text);
+    final id = int.parse(_idController.text);
     final row = await dbHelper.queryById(id);
     if (row != null) {
       debugPrint('query by ID ($id): $row');
     } else {
       debugPrint('No row found with ID $id');
     }
-
-    // Clear the text field after query
-    _queryIdController.clear();
   }
 
   void _deleteAll() async {
